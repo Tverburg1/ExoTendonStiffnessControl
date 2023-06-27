@@ -2,9 +2,12 @@
 #include <iostream>
 #include <cmath>
 
+
 #include <AS5600.h>
 #include "stiffness_control.h"
 
+
+//Motor stuff ------------------------------------
 AS5600 encoder;
 signed int pos = 0;
 int prev_angle = 0;
@@ -28,24 +31,25 @@ int cycle_counter = 0;
 
 int zero_slack_counter = 0;
 
-// For oscilation
+// For oscilation ------------------------------
 double t_start = 0;
 double t_current = 0;
 
-// PID controller parameters
+// PID controller parameters -------------------
 const double kP = 10.00;
 const double kI = 10.0;
 const double kD = 0.00;
 
-// Current and previous error values
+// Current and previous error values ----------
 double prevError = 0.0;
 double integral = 0.0;
 
-// Time step (in seconds)
+// Time step (in seconds) ---------------------
 const double dt = 0.001;
 
 double last_print = 0;
 double last_stop_time = 0;
+
 
 
 double pidControl(int currentInt, int referenceInt) {

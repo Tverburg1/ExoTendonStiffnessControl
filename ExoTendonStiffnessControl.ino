@@ -13,7 +13,7 @@ int servoPos = 180;
 int stage = 0;
 int counter = 0;
 int counter_threshold = 100;
-int millis_threshold = 10000;
+int millis_threshold = 200;
 int start_delay = 2000;
 int t0 = 0;
 int t1 = 0;
@@ -74,11 +74,11 @@ void loop() {
 
 
         if (reverse) {
-          servoPos += 90;
+          servoPos ++;
           t0 = millis();
         }
         else{
-          servoPos -= 90;
+          servoPos --;
           t0 = millis();
         }
 
@@ -108,11 +108,11 @@ void loop() {
 
 
         if (reverse) {
-          servoPos += 90;
+          servoPos ++;
           t0 = millis();
         }
         else{
-          servoPos -= 90;
+          servoPos --;
           t0 = millis();
         }
 
@@ -142,11 +142,11 @@ void loop() {
 
 
         if (reverse) {
-          servoPos += 90;
+          servoPos ++;
           t0 = millis();
         }
         else{
-          servoPos -= 90;
+          servoPos --;
           t0 = millis();
         }
 
@@ -176,11 +176,11 @@ void loop() {
 
 
         if (reverse) {
-          servoPos += 90;
+          servoPos ++;
           t0 = millis();
         }
         else{
-          servoPos -= 90;
+          servoPos --;
           t0 = millis();
         }
 
@@ -210,11 +210,11 @@ void loop() {
 
 
         if (reverse) {
-          servoPos += 90;
+          servoPos ++;
           t0 = millis();
         }
         else{
-          servoPos -= 90;
+          servoPos --;
           t0 = millis();
         }
 
@@ -244,11 +244,11 @@ void loop() {
 
 
         if (reverse) {
-          servoPos += 90;
+          servoPos ++;
           t0 = millis();
         }
         else{
-          servoPos -= 90;
+          servoPos --;
           t0 = millis();
         }
 
@@ -278,11 +278,11 @@ void loop() {
 
 
         if (reverse) {
-          servoPos += 90;
+          servoPos ++;
           t0 = millis();
         }
         else{
-          servoPos -= 90;
+          servoPos --;
           t0 = millis();
         }
 

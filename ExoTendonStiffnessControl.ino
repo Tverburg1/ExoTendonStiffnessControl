@@ -19,6 +19,7 @@ int t0 = 0;
 int t1 = 0;
 int t2 = 0;
 bool start = false;
+bool reverse = false;
 
 
 
@@ -67,16 +68,30 @@ void loop() {
       if (t1-t0 >= start_delay && not start){
         start = true;
         t0 = millis();
-        stiffservo.write(0);
-        servoPos = 0;
       }
 
       if (t1-t0 >= millis_threshold && start){
-        stiffservo.write(180);
-        servoPos = 180;
-        t0 = millis();
-        start = false;
-        stage ++;
+
+
+        if (reverse) {
+          servoPos += 90;
+          t0 = millis();
+        }
+        else{
+          servoPos -= 90;
+          t0 = millis();
+        }
+
+        stiffservo.write(servoPos);
+
+        if (servoPos == 0){
+          reverse = true;
+        }
+        else if (servoPos == 180){
+          reverse = false;
+          start = false;
+          stage ++;
+        }
       }
     }
 
@@ -87,16 +102,30 @@ void loop() {
       if (t1-t0 >= start_delay && not start){
         start = true;
         t0 = millis();
-        stiffservo.write(0);
-        servoPos = 0;
       }
 
       if (t1-t0 >= millis_threshold && start){
-        stiffservo.write(180);
-        servoPos = 180;
-        t0 = millis();
-        start = false;
-        stage ++;
+
+
+        if (reverse) {
+          servoPos += 90;
+          t0 = millis();
+        }
+        else{
+          servoPos -= 90;
+          t0 = millis();
+        }
+
+        stiffservo.write(servoPos);
+
+        if (servoPos == 0){
+          reverse = true;
+        }
+        else if (servoPos == 180){
+          reverse = false;
+          start = false;
+          stage ++;
+        }
       }
     }
 
@@ -107,16 +136,30 @@ void loop() {
       if (t1-t0 >= start_delay && not start){
         start = true;
         t0 = millis();
-        stiffservo.write(0);
-        servoPos = 0;
       }
 
       if (t1-t0 >= millis_threshold && start){
-        stiffservo.write(180);
-        servoPos = 180;
-        t0 = millis();
-        start = false;
-        stage ++;
+
+
+        if (reverse) {
+          servoPos += 90;
+          t0 = millis();
+        }
+        else{
+          servoPos -= 90;
+          t0 = millis();
+        }
+
+        stiffservo.write(servoPos);
+
+        if (servoPos == 0){
+          reverse = true;
+        }
+        else if (servoPos == 180){
+          reverse = false;
+          start = false;
+          stage ++;
+        }
       }
     }
 
@@ -127,16 +170,30 @@ void loop() {
       if (t1-t0 >= start_delay && not start){
         start = true;
         t0 = millis();
-        stiffservo.write(0);
-        servoPos = 0;
       }
 
       if (t1-t0 >= millis_threshold && start){
-        stiffservo.write(180);
-        servoPos = 180;
-        t0 = millis();
-        start = false;
-        stage ++;
+
+
+        if (reverse) {
+          servoPos += 90;
+          t0 = millis();
+        }
+        else{
+          servoPos -= 90;
+          t0 = millis();
+        }
+
+        stiffservo.write(servoPos);
+
+        if (servoPos == 0){
+          reverse = true;
+        }
+        else if (servoPos == 180){
+          reverse = false;
+          start = false;
+          stage ++;
+        }
       }
     }
 
@@ -147,16 +204,30 @@ void loop() {
       if (t1-t0 >= start_delay && not start){
         start = true;
         t0 = millis();
-        stiffservo.write(0);
-        servoPos = 0;
       }
 
       if (t1-t0 >= millis_threshold && start){
-        stiffservo.write(180);
-        servoPos = 180;
-        t0 = millis();
-        start = false;
-        stage ++;
+
+
+        if (reverse) {
+          servoPos += 90;
+          t0 = millis();
+        }
+        else{
+          servoPos -= 90;
+          t0 = millis();
+        }
+
+        stiffservo.write(servoPos);
+
+        if (servoPos == 0){
+          reverse = true;
+        }
+        else if (servoPos == 180){
+          reverse = false;
+          start = false;
+          stage ++;
+        }
       }
     }
 
@@ -167,19 +238,33 @@ void loop() {
       if (t1-t0 >= start_delay && not start){
         start = true;
         t0 = millis();
-        stiffservo.write(0);
-        servoPos = 0;
       }
 
       if (t1-t0 >= millis_threshold && start){
-        stiffservo.write(180);
-        servoPos = 180;
-        t0 = millis();
-        start = false;
-        stage ++;
+
+
+        if (reverse) {
+          servoPos += 90;
+          t0 = millis();
+        }
+        else{
+          servoPos -= 90;
+          t0 = millis();
+        }
+
+        stiffservo.write(servoPos);
+
+        if (servoPos == 0){
+          reverse = true;
+        }
+        else if (servoPos == 180){
+          reverse = false;
+          start = false;
+          stage ++;
+        }
       }
     }
-
+    
     if (stage == 6){
       des_stiffness = 200;
       t1 = millis();
@@ -187,19 +272,32 @@ void loop() {
       if (t1-t0 >= start_delay && not start){
         start = true;
         t0 = millis();
-        stiffservo.write(0);
-        servoPos = 0;
       }
 
       if (t1-t0 >= millis_threshold && start){
-        stiffservo.write(180);
-        servoPos = 180;
-        t0 = millis();
-        start = false;
-        stage ++;
+
+
+        if (reverse) {
+          servoPos += 90;
+          t0 = millis();
+        }
+        else{
+          servoPos -= 90;
+          t0 = millis();
+        }
+
+        stiffservo.write(servoPos);
+
+        if (servoPos == 0){
+          reverse = true;
+        }
+        else if (servoPos == 180){
+          reverse = false;
+          start = false;
+          stage ++;
+        }
       }
     }
-
     
   } 
 }

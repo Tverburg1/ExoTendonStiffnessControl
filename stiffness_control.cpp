@@ -13,13 +13,13 @@ float targetMotorPosition;
 
 
 int stiffnessToMotorPosition(float targetStiffness){
-  float targetAngle = atan2(targetStiffness,springstiffness); // In degrees
+  float targetAngle = 0.5*atan2(targetStiffness,springstiffness); // In degrees
   int targetMotorPosition = encoderResolution*(targetAngle*finalTranmission/(2*M_PI));
   return targetMotorPosition;
 }
 
 float motorPositionToStiffness(int motorPosition){
   float actualAngle = 2*M_PI*motorPosition/(encoderResolution*finalTranmission);
-  float actualStiffness = tan(actualAngle)*springstiffness;
+  float actualStiffness = tan(2*actualAngle)*springstiffness;
   return actualStiffness;
 }

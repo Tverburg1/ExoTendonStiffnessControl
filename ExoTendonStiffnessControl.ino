@@ -2,6 +2,7 @@ signed int des_pos;
 float des_stiffness;
 #include "loadcell_read.h"
 #include "motor_control.h"
+#include "stiffness_control.h"
 
 #include <Servo.h>
 
@@ -21,7 +22,7 @@ int t1 = 0;
 int t2 = 0;
 bool start = false;
 bool reverse = false;
-
+int testStiffnesses[] = {200, 190, 180, 170, 160, 150, 140, 130, 120};
 
 
 String  incomingSerialData;   // for incoming serial data
@@ -59,39 +60,31 @@ void loop() {
   if (startStiffTest) {
     if (t0 == 0){
       t0 = millis();
+      stiffservo.write(servoPos);
     }
-
-
+    
     if (true){
-      des_stiffness = int((stage+1)*25);
-      t1 = millis();
-
-      if (t1-t0 >= start_delay && not start){
-        start = true;
-        t0 = millis();
-      }
-
-      if (t1-t0 >= millis_threshold && start){
-
-
-        if (reverse) {
-          servoPos += angleStep;
-          t0 = millis();
-        }
-        else{
-          servoPos -= angleStep;
-          t0 = millis();
-        }
-
+      if( stage > sizeof(testStiffnesses)){
+        des_stiffness = 0;
+        servoPos = 180;
         stiffservo.write(servoPos);
-
-        if (servoPos == 0){
-          reverse = true;
+      }
+      else{
+        des_stiffness = testStiffnesses[stage];
+        t1 = millis();
+  
+        if (t1-t0 >= start_delay && not start){
+          start = true;
+          t0 = millis();
         }
-        else if (servoPos == 180){
-          reverse = false;
-          start = false;
-          stage ++;
+  
+        servoPos = 180 - servoPosConstantForce(200, testStiffnesses[stage], 0.05);
+        stiffservo.write(servoPos);
+        
+        
+        if (t1-t0 >= millis_threshold && start){
+            start = false;
+            stage ++;
         }
       }
     }
@@ -135,6 +128,3 @@ void loop() {
     
   } 
 }
-
-
-

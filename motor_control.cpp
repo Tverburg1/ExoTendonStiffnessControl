@@ -37,7 +37,7 @@ double t_current = 0;
 
 // PID controller parameters -------------------
 const double kP = 10.00;
-const double kI = 10.0;
+const double kI = 20.0;
 const double kD = 0.00;
 
 // Current and previous error values ----------
@@ -238,12 +238,12 @@ void read_position() {
   int angle = encoder.readAngle();
   signed int d_angle = angle - prev_angle;
 
-  if ( d_angle >= 300 )
+  if ( d_angle >= 1000 )
   {
     cycle_counter -= 1;
 
   }
-  else if ( d_angle <= -300)
+  else if ( d_angle <= -1000)
   {
     cycle_counter += 1;
   }

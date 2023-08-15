@@ -282,10 +282,10 @@ void configure_motor() {
   String compareString = "V\n";
 
 
-  Serial.println("Configuring motor, tune the initial position by sending a position. When finished send and V to confirm the configuration and enable control");
+//  Serial.println("Configuring motor, tune the initial position by sending a position. When finished send and V to confirm the configuration and enable control");
   while (not motorConfigured)
   {
-    Serial.println("Waiting for configuration");
+//    Serial.println("Waiting for configuration");
     if (Serial.available() > 0)
     {
       input = Serial.readString();
@@ -298,7 +298,7 @@ void configure_motor() {
             init_angle = encoder.readAngle();
             des_pos = encoder.readAngle();
             cycle_counter = 0;
-            Serial.println("Motor configured");
+//            Serial.println("Motor configured");
           }
         }
         else {

@@ -9,20 +9,21 @@ float des_stiffness;
 int servo_pin = 10;
 Servo stiffservo;
 bool startStiffTest;
-int servoPos = 180;
-int stage = 0;
+int servoPos = 4095;
+int servoLimit = 4095;
+int stage = 1;
 int counter = 0;
 int counter_threshold = 100;
-int millis_threshold = 5000;
+int millis_threshold = 2000;
 int start_delay = 2000;
-int angleStep = 90;
+int angleStep = 2048;
 int t0 = 0;
 int t1 = 0;
 int t2 = 0;
 bool start = false;
 bool reverse = false;
 bool restart = false;
-int resetStiffness = 500;
+int resetStiffness = 100000;
 
 
 
@@ -52,6 +53,7 @@ void loop() {
   }
 //  read_position();
   stiffnessMotorControl(des_stiffness);
+  
   Serial.print(", Loadcell reading: ");Serial.print(calc_loadcell_output());
   Serial.print(", Servo position: ");Serial.println(servoPos);
 //  printData();
@@ -65,40 +67,51 @@ void loop() {
 
 
     if (true){
-      des_stiffness = int((stage)*25);
-      t1 = millis();
-
-      if (t1-t0 >= start_delay && not start){
-        start = true;
-        t0 = millis();
+      if (stage == -1){
+        des_stiffness = 0;
+        servoPos = 4095;
       }
+      else{
+        des_stiffness = int((stage)*50);
+      
 
-      if (t1-t0 >= millis_threshold && start){
-
-
-        if (reverse) {
-          servoPos += angleStep;
+        float theta = atan2(sqrt(des_stiffness), sqrt(4*144));
+        int maxServoSteps = 2*(0.088*cos(theta)/(PI*0.04))*4095;
+        angleStep = maxServoSteps/2;
+        t1 = millis();
+  
+        if (t1-t0 >= start_delay && not start){
+          start = true;
           t0 = millis();
         }
-        else{
-          servoPos -= angleStep;
-          t0 = millis();
-        }
-
-        stiffservo.write(servoPos);
-
-        if (servoPos == 0){
-          reverse = true;
-        }
-        else if (servoPos == 180){
-          reverse = false;
-          start = false;
-          stage ++;
-
-          if (des_stiffness == resetStiffness){
-            stage = 0;
+  
+        if (t1-t0 >= millis_threshold && start){
+  
+  
+          if (reverse) {
+            servoPos += angleStep;
+            t0 = millis();
           }
-          
+          else{
+            servoPos -= angleStep;
+            t0 = millis();
+          }
+  
+          stiffservo.write(servoPos);
+  
+          if (servoPos == 4095 - 2*angleStep){
+            reverse = true;
+          }
+          else if (servoPos == 4095){
+            reverse = false;
+            start = false;
+            stage ++;
+  
+            if (des_stiffness == resetStiffness){
+              stage = -1;
+            }
+            
+          }
         }
       }
     }

@@ -25,8 +25,12 @@ float motorPositionToStiffness(int motorPosition){
 }
 
 int servoPosConstantForce(int k_1, int k_2, float x){
-  float dx = (x*(k_1 - k_2))/k_2;
-  float servoDegrees = dx/(M_PI*0.01);
-  int servoSteps = 180.0*servoDegrees;
+  float theta1 = atan2(sqrt(k_1), sqrt(4*springstiffness)); 
+  float theta2 = atan2(sqrt(k_2), sqrt(4*springstiffness));
+
+  
+  float dx = (x*k_1/k_2) - x - 0.0065*(sin(theta1)-sin(theta2));
+  float servoDegrees = dx/(M_PI*0.02);
+  int servoSteps = 4095*servoDegrees;
   return servoSteps;
 }

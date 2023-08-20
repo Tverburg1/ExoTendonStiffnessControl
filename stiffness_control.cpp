@@ -13,13 +13,24 @@ float targetMotorPosition;
 
 
 int stiffnessToMotorPosition(float targetStiffness){
-  float targetAngle = atan2(targetStiffness,springstiffness); // In degrees
+  float targetAngle = atan2(sqrt(targetStiffness), sqrt(4*springstiffness)); // In degrees
   int targetMotorPosition = encoderResolution*(targetAngle*finalTranmission/(2*M_PI));
   return targetMotorPosition;
 }
 
 float motorPositionToStiffness(int motorPosition){
   float actualAngle = 2*M_PI*motorPosition/(encoderResolution*finalTranmission);
-  float actualStiffness = tan(actualAngle)*springstiffness;
+  float actualStiffness = tan(2*actualAngle)*springstiffness;
   return actualStiffness;
+}
+
+int servoPosConstantForce(int k_1, int k_2, float x){
+  float theta1 = atan2(sqrt(k_1), sqrt(4*springstiffness)); 
+  float theta2 = atan2(sqrt(k_2), sqrt(4*springstiffness));
+
+  
+  float dx = (x*k_1/k_2) - x - 0.0065*(sin(theta1)-sin(theta2));
+  float servoDegrees = dx/(M_PI*0.02);
+  int servoSteps = 4095*servoDegrees;
+  return servoSteps;
 }

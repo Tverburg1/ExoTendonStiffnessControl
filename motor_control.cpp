@@ -2,9 +2,12 @@
 #include <iostream>
 #include <cmath>
 
+
 #include <AS5600.h>
 #include "stiffness_control.h"
 
+
+//Motor stuff ------------------------------------
 AS5600 encoder;
 signed int pos = 0;
 int prev_angle = 0;
@@ -28,24 +31,25 @@ int cycle_counter = 0;
 
 int zero_slack_counter = 0;
 
-// For oscilation
+// For oscilation ------------------------------
 double t_start = 0;
 double t_current = 0;
 
-// PID controller parameters
+// PID controller parameters -------------------
 const double kP = 10.00;
-const double kI = 10.0;
+const double kI = 20.0;
 const double kD = 0.00;
 
-// Current and previous error values
+// Current and previous error values ----------
 double prevError = 0.0;
 double integral = 0.0;
 
-// Time step (in seconds)
+// Time step (in seconds) ---------------------
 const double dt = 0.001;
 
 double last_print = 0;
 double last_stop_time = 0;
+
 
 
 double pidControl(int currentInt, int referenceInt) {
@@ -234,12 +238,12 @@ void read_position() {
   int angle = encoder.readAngle();
   signed int d_angle = angle - prev_angle;
 
-  if ( d_angle >= 300 )
+  if ( d_angle >= 1000 )
   {
     cycle_counter -= 1;
 
   }
-  else if ( d_angle <= -300)
+  else if ( d_angle <= -1000)
   {
     cycle_counter += 1;
   }
@@ -278,10 +282,10 @@ void configure_motor() {
   String compareString = "V\n";
 
 
-  Serial.println("Configuring motor, tune the initial position by sending a position. When finished send and V to confirm the configuration and enable control");
+//  Serial.println("Configuring motor, tune the initial position by sending a position. When finished send and V to confirm the configuration and enable control");
   while (not motorConfigured)
   {
-    Serial.println("Waiting for configuration");
+//    Serial.println("Waiting for configuration");
     if (Serial.available() > 0)
     {
       input = Serial.readString();
@@ -294,7 +298,7 @@ void configure_motor() {
             init_angle = encoder.readAngle();
             des_pos = encoder.readAngle();
             cycle_counter = 0;
-            Serial.println("Motor configured");
+//            Serial.println("Motor configured");
           }
         }
         else {
